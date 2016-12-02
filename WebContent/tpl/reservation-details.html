@@ -1,0 +1,25 @@
+<div class="form-left-col">
+    <label>Id:</label>
+    <input id="reservationId" name="id" type="text" value="<%= id %>" disabled />
+
+    <label>Origin:</label>
+    <input type="text" id="origin" name="origin" value="<%= origin %>" required/>
+
+    <label>Destination</label>
+    <input type="text" id="destination" name="destination" value="<%= destination %>"/>
+
+    <label>Price Paid:</label>
+    <input type="number" id="pricePaid" name="pricePaid" value="<%= pricePaid %>"/>
+
+     <!-- Should be a checkbox -->
+     <br />
+    <div style="margin-bottom:63px">
+    	<label style="display:inline;">Is Round Trip</label>
+	    <input type="checkbox" id="isRoundTrip" name="isRoundTrip"  checked="<%= isRoundTrip %>"
+	        style="width:36px"/>
+	    <br />
+	</div>
+    <button class="save">Save</button>
+    <button class="delete">Delete</button>
+</div>
+
