@@ -9,20 +9,20 @@
 
 #sidebar {
 	position: absolute;
-	left: 10px;
-	top: 70px;
-	bottom: 20px;
-	width: 260px;
+	left: 316px;
+	top: 120px;
+	bottom: 256px;
+	width: 365px;
 	border:solid 1px #CCCCCC;
 	overflow-y: scroll;
 }
 
 #content {
     position: absolute;
-   	top: 70px;
+   	top: 117px;
    	bottom: 20px;
-   	left:300px;
-   	right:20px;
+   	left: 759px;
+   	right: 20px;
 }
 
 .form-left-col {

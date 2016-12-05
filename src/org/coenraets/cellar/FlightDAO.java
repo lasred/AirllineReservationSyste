@@ -19,7 +19,17 @@ public class FlightDAO {
 	        Statement s = c.createStatement();
 	        ResultSet rs = s.executeQuery(sql);
 	        while (rs.next()) {
-	            list.add(processRow(rs));
+	        	Flight flightInfo = processRow(rs);
+	            list.add(flightInfo);
+		        //get airline
+	            try {
+	            	String getAirlineInfo = "SELECT name from Airline WHERE airline_id=" + flightInfo.getAirline().getId();
+	            	Statement airlineInfoStatement = c.createStatement();
+	            	ResultSet airline = airlineInfoStatement.executeQuery(getAirlineInfo);
+	            	flightInfo.getAirline().setName(airline.getString("name"));
+	            } catch(Exception e) {
+	            	
+	            }
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -84,17 +94,19 @@ public class FlightDAO {
 
      public Flight update(Flight res) {
         Connection c = null;
+        System.out.println("update id: "+res.getAirline().getId());
 	    try {
 	       c = ConnectionHelper.getConnection();
 	       PreparedStatement ps = c.prepareStatement("UPDATE Flight"
 	          + " SET base_price=?, origin=?, "
-	          + "destination=?, depart_date=?"
+	          + "destination=?, airline_id=?, depart_date=?"
 	          + "WHERE flight_id=?");
 	       ps.setDouble(1, res.getBasePrice());
 	       ps.setString(2, res.getOrigin());
 	       ps.setString(3, res.getDestination());
-	       ps.setDate(4, res.getDepartDate());
-	       ps.setInt(5, res.getId());
+	       ps.setInt(4, res.getAirline().getId());
+	       ps.setDate(5, res.getDepartDate());
+	       ps.setInt(6, res.getId());
 	       ps.executeUpdate();
 	    } catch (SQLException e) {
 	       e.printStackTrace();
@@ -123,10 +135,14 @@ public class FlightDAO {
 
 	 protected Flight processRow(ResultSet rs) throws SQLException {
 	    Flight res = new Flight();
+	    Airline airline = new Airline();
+	    res.setAirline(airline);
 	    res.setId(rs.getInt("flight_id"));
 	    res.setOrigin(rs.getString("origin"));
 	    res.setDestination(rs.getString("destination"));
 	    res.setDepartDate(rs.getDate("depart_date"));
+	    res.setBasePrice(rs.getDouble("base_price"));
+	    res.getAirline().setId(rs.getInt("airline_id"));
 	    return res;
 	}
 }

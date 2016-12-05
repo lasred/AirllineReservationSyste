@@ -2,6 +2,10 @@
     <label>Id:</label>
     <input id="reservationId" name="id" type="text" value="<%= id %>" disabled />
 
+    <label>Airline</label>
+    <select id="airline">
+	</select>    
+    
     <label>Origin:</label>
     <input type="text" id="origin" name="origin" value="<%= origin %>" required/>
 
@@ -13,6 +17,7 @@
 
     <!--  Airline and aircraft should eventually be drop down lists -->
     <div style="margin-bottom:63px">
+    <label>Depart Date</label>
     <input type="date" id="departDate" name="departDate" value="<%= departDate %>" />
 	</div>
 	

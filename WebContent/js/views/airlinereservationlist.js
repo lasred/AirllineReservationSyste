@@ -6,14 +6,16 @@ window.EntityListView = Backbone.View.extend({
     initialize:function () {
         this.model.bind("reset", this.render, this);
         var self = this;
+        var type = this.options.type;
         this.model.bind("add", function (res) {
-          $(self.el).append(new EntityListItemView({model:res, type: this.options.type}).render().el);        		
+          $(self.el).append(new EntityListItemView({model:res, type: type}).render().el);        		
         });
     },
 
     render:function (eventName) {
+    	var type = this.options.type;
         _.each(this.model.models, function (res) {
-            $(this.el).append(new EntityListItemView({model:res, type: this.options.type}).render().el);
+            $(this.el).append(new EntityListItemView({model:res, type: type}).render().el);
         }, this);
         return this;
     }

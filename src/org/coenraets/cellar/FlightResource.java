@@ -50,8 +50,8 @@ public class FlightResource {
 	@PUT @Path("{id}")
 	@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Flight update(Reservation flight) {
-		System.out.println("Doing update for reservation with id " + wine.getId());
+	public Flight update(Flight flight) {
+		System.out.println("Doing update for flight with id " + flight.getId());
 		dao.update(flight);
 		return flight;
 	}

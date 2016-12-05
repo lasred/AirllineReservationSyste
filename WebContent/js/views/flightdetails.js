@@ -3,14 +3,18 @@ window.FlightView = Backbone.View.extend({
 	tagName : "div", 
 
 	initialize : function() {
-		console.log("stupid");
 		this.template = _.template(tpl.get('flight-details'));
-		console.log("smart");
 		this.model.bind("change", this.render, this);
 	},
 
 	render : function(eventName) {
 		$(this.el).html(this.template(this.model.toJSON()));
+		//populate 
+		//debugger;
+		//$.each(this.options.airlines, function(airline) {
+		//	debugger;
+		//    airlines.append($("<option />").val(airline.id).text(airline.name));
+	//	});
 		return this;
 	},
 
@@ -20,6 +24,18 @@ window.FlightView = Backbone.View.extend({
 		"click .delete" : "deleteFlight"
 	},
 
+	showAirlines : function() {
+		var select = document.getElementById("airline"); 
+		var airlines = this.options.airlines;			
+		for(var i = 0; i < airlines.length; i++) {
+		    var attributes = airlines.models[i].attributes;
+		    var el = document.createElement("option");
+		    el.textContent = attributes.name;
+		    el.value = attributes.id;
+		    select.appendChild(el);
+		}
+	},
+	
 	change : function(event) {
 		var target = event.target;
 		console.log('changing ' + target.id + ' from: ' + target.defaultValue
@@ -29,9 +45,13 @@ window.FlightView = Backbone.View.extend({
 	saveFlight : function() {
 		this.model.set({
 			departDate : $('#departDate').val(),
-			basePrice : $('#basePrice').is(":checked"),
+			basePrice : $('#basePrice').val(),
 			origin : $('#origin').val(),
-			destination : $('#destination').val()
+			destination : $('#destination').val(),
+			airline : { 
+				id: $('#airline').val(),
+				name: ""
+			}
 		});
 		if (this.model.isNew()) {
 			var self = this;
@@ -41,7 +61,6 @@ window.FlightView = Backbone.View.extend({
 				}
 			});
 		} else {
-			alert()
 			this.model.save();
 		}
 

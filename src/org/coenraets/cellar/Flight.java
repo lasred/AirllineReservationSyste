@@ -14,6 +14,8 @@ public class Flight {
 
     private double basePrice;
     
+    private Airline airline;
+    
 	public int getId() {
 		return id;
 	}
@@ -53,5 +55,12 @@ public class Flight {
     public Date getDepartDate() {
     	return departDate;
     }
-
+    
+    public void setAirline(Airline airline) {
+    	this.airline = airline;
+    }
+    
+    public Airline getAirline() {
+    	return airline;
+    }
 }

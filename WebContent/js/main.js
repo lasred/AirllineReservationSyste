@@ -19,7 +19,7 @@ var AppRouter = Backbone.Router.extend({
 		"reservations/:id"	: "reservationDetails",
 		"flights/": "listAllFlights",
 		"flights/new": "newFlight",
-		"flights/:id": "flightsDetails"
+		"flights/:id": "flightDetails"
 	},
 
 	list: function() {
@@ -41,13 +41,22 @@ var AppRouter = Backbone.Router.extend({
 	
 	flightDetails: function(id) {
         this.listAllFlights(function() {
-			var flight = app.reservationList.get(id);
-		    app.showView('#content', new FlightView({model: flight}) );
-        });
+			var flight = app.flightList.get(id);
+        	var fg = new FlightView({model: flight, airlines: app.airlineList});
+		    app.showView('#content', fg);
+		    fg.showAirlines();
+		    $('#airline').val(flight.attributes.airline.id);   
+		});
+        //show all airlines
   	},
 
 	newFlight: function() {
-		app.showView('#content', new FlightView({model: new Flight()}) );
+		this.listAllFlights(function() {
+			var fg = new FlightView({model: new Flight(), airlines: app.airlineList});
+			app.showView('#content', fg);			
+			fg.showAirlines();
+		});
+		//show all airlines
 	},
 
     showView: function(selector, view) {
@@ -57,7 +66,7 @@ var AppRouter = Backbone.Router.extend({
         this.currentView = view;
         return view;
     },
-
+    
     listAllFlights: function(callback) {
         if (this.flightList) {
             if (callback) callback();
@@ -67,7 +76,11 @@ var AppRouter = Backbone.Router.extend({
                $('#sidebar').html( new EntityListView({model: 
             	   app.flightList, type:"flight"}).render().el );
                if (callback) callback();
-            }});
+            }});   		
+       		this.airlineList = new AirlineCollection();
+       		this.airlineList.fetch();
+
+       		this.setText('Flight');
         }
     },
 
@@ -81,7 +94,13 @@ var AppRouter = Backbone.Router.extend({
             	   app.reservationList,type:"reservation"}).render().el );
                if (callback) callback();
             }});
+       		this.setText('Reservation');
         }
+    },
+    
+    setText: function(type) {
+    	$('.new').text('New ' + type);
+    	$('#see_all').text(type+'s');
     }
 });
 

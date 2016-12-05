@@ -21,7 +21,7 @@ window.Flight = Backbone.Model.extend({
 		origin: "",
 		destination: "",
 		departDate: null,
-		isRoundTrip: true
+		basePrice: 0.0
 	 }
 });
 
@@ -29,3 +29,16 @@ window.FlightCollection = Backbone.Collection.extend({
 	model: Flight,
 	url: "api/flights"
 });
+
+window.Airline = Backbone.Model.extend({
+	urlRoot: "api/airlines",
+	defaults: {
+		id: null,
+		name: "",
+	}
+})
+
+window.AirlineCollection = Backbone.Collection.extend({
+	model: Airline,
+	url: "api/airlines"
+})

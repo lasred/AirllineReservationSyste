@@ -14,8 +14,11 @@ window.HeaderView = Backbone.View.extend({
     },
 
 	newReservation: function(event) {
-		app.navigate("reservations/new", true);
+		if(this.$('.new').text() == "New Reservation") {
+			app.navigate("reservations/new", true);			
+		} else {
+			app.navigate("flights/new", true);
+		}
 		return false;
 	}
-
 });
